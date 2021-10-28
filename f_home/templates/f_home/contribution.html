@@ -1,0 +1,57 @@
+{% extends "f_home/base.html" %}
+{% load static %}
+{% block title %} My contribution {% endblock %}
+{% block content %}
+
+<div class="ui container mainsection">
+    <div class="column">
+        {% if uposts %}
+        <table class="ui celled striped table">
+            <thead>
+                <tr>
+                    <th colspan="5">
+                        Contribution list
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for post in uposts %}
+                <tr>
+                    <td class="collapsing">
+                        <img class="ui avatar image" src="{{ post.logo.url }}">
+                    </td>
+                    <td>{{post.name}}</td>
+                    <td>{{post.websitelink }}</td>
+                    <td class="right aligned collapsing">
+                        <a href="{% url 'post-update' post.id %}">
+                            <i class="edit icon"></i>
+                            <b>Update</b>
+                        </a>
+                    </td>
+                    <td class="right aligned collapsing">
+                        <a href="{% url 'post-delete' post.id %}">
+                            <i class="trash icon"></i>
+                            <b>Delete</b>
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+            <div class="ui placeholder segment">
+                <div class="ui icon header">
+                    <i class="frown outline icon"></i>
+                    You have no contribute any company information yet.
+                </div>
+                <a href="{% url 'post-create' %}"><div class="ui inverted violet button"><i class="add icon"></i>Create First</div></a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+{% if uposts|length > 8 %}
+  {% include "f_home/footer.html" %}
+{% endif %}
+
+{% endblock %}

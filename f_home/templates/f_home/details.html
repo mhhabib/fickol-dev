@@ -1,0 +1,71 @@
+{% extends "f_home/base.html" %}
+{% load static %}
+{% block title %} Profile - {{ details.name }} {% endblock %}
+{% block content %}
+
+
+<div class="ui center aligned container mainsection">
+    <div class="ui segment" id="profile-segment">
+        <img class="ui centered medium image" src="{{details.logo.url}}">
+        <div class="ui items">
+            <div class="item">
+                <div class="content">
+                    <a class="header">{{ details.name }}</a>
+                    <div class="extra">
+                        <a href="{{ details.websitelink}}">
+                            <div class="ui inverted red animated button" tabindex="0">
+                                <div class="visible content">Official Site</div>
+                                <div class="hidden content">
+                                    <i class="right arrow icon"></i>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="meta">
+                        <span class="cinema">{{details.address}}</span>
+                    </div>
+                    <div class="description" id="details-description">
+                        <p>Established in <span>{{ details.estd }}</span> and Currently their empoyee number is approximately <span>{{ details.size }}</span></p>
+                        <div class="ui horizontal divider" id="dividers">
+                            They are currently using these technology
+                        </div>
+                        <p>
+                            {% for tech in details.tech.all %}
+                                {% if forloop.counter|divisibleby:"13" %}
+                                    <a class="ui black label" id="techlabel">{{tech}}</a>
+                                {% elif forloop.counter|divisibleby:"12" %}
+                                    <a class="ui gray label" id="techlabel">{{tech}}</a>
+                                 {% elif forloop.counter|divisibleby:"11" %}
+                                    <a class="ui brown label" id="techlabel">{{tech}}</a>
+                                {% elif forloop.counter|divisibleby:"10" %}
+                                    <a class="ui pink label" id="techlabel">{{tech}}</a>
+                                {% elif forloop.counter|divisibleby:"9" %}
+                                    <a class="ui purple label" id="techlabel">{{tech}}</a>
+                                {% elif forloop.counter|divisibleby:"8" %}
+                                    <a class="ui violet label" id="techlabel">{{tech}}</a>
+                                {% elif forloop.counter|divisibleby:"7" %}
+                                    <a class="ui blue label" id="techlabel">{{tech}}</a>
+                                {% elif forloop.counter|divisibleby:"6" %}
+                                    <a class="ui teal label" id="techlabel">{{tech}}</a>
+                                {% elif forloop.counter|divisibleby:"5" %}
+                                    <a class="ui green label" id="techlabel">{{tech}}</a>
+                                {% elif forloop.counter|divisibleby:"4" %}
+                                    <a class="ui olive label" id="techlabel">{{tech}}</a>
+                                {% elif forloop.counter|divisibleby:"3" %}
+                                    <a class="ui yellow label" id="techlabel">{{tech}}</a>
+                                {% elif forloop.counter|divisibleby:"2" %}
+                                    <a class="ui orange label" id="techlabel">{{tech}}</a> 
+                                {% else %}
+                                    <a class="ui red label" id="techlabel">{{tech}}</a>
+                                {% endif %}
+                            {% endfor %}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% include "f_home/footer.html" %}
+
+{% endblock %}

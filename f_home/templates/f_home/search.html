@@ -1,0 +1,135 @@
+{% extends "f_home/base.html" %}
+{% load static %}
+{% block title %}Searching{% endblock %}
+{% block content %}
+
+
+<div class="ui center aligned container searchsection">
+    <form method="POST">
+        {% csrf_token %}
+        <div class="ui input" id="search-bar">
+            <input type="text" name="search" placeholder="Search...">
+            <select name="choice" class="ui compact selection dropdown">
+                <option value="company">Company</option>
+                <option value="technology">Technology</option>
+                <option value="location">Location</option>
+            </select>
+            <button class="ui teal button">Search</button>
+        </div>
+    <form>
+</div>
+
+<div class="ui container" id="search-feed">
+    <div class="ui feed">
+        {% if companies %}
+        <p> Your search <b>{{ searched }}</b> matches to {{ companies|length }} results..</p>
+            <div class="ui items">
+                {% for res in companies %}
+                <div class="item" id="result-item">
+                    <a class="ui tiny image">
+                    <img src="{{res.logo.url}}">
+                    </a>
+                    <div class="content">
+                        <a href="{% url 'details' res.id %}" class="header">{{res.name}}</a>
+                        <div class="description">
+                            <p>Established in <span>{{ res.estd }}</span> and Currently their empoyee number is approximately <span>{{ res.size }}</span></p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% elif addresses %}
+        <p> Your search <b>{{searched}}</b> matches to {{ addresses|length }} results..</p>
+            <div class="ui items">
+                {% for res in addresses %}
+                <div class="item" id="result-item">
+                    <a class="ui tiny image">
+                    <img src="{{res.logo.url}}">
+                    </a>
+                    <div class="content">
+                        <a href="{% url 'details' res.id %}" class="header">{{res.name}}</a>
+                        <div class="description">
+                            <p>{{ res.address }}</p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% elif technologies %}
+            <p> Your search <b>{{searched}}</b> matches to {{ technologies|length }} results..</p>
+            <div class="ui items">
+                {% for res in technologies %}
+                <div class="item" id="result-item">
+                    <a class="ui tiny image">
+                    <img src="{{res.logo.url}}">
+                    </a>
+                    <div class="content">
+                        <a href="{% url 'details' res.id %}" class="header">{{res.name}}</a>
+                        <div class="description">
+                            <p>
+                                {% for tech in res.tech.all %}
+                                    {% if forloop.counter|divisibleby:"13" %}
+                                        <a class="ui black label" id="techlabel">{{tech}}</a>
+                                    {% elif forloop.counter|divisibleby:"12" %}
+                                        <a class="ui gray label" id="techlabel">{{tech}}</a>
+                                    {% elif forloop.counter|divisibleby:"11" %}
+                                        <a class="ui brown label" id="techlabel">{{tech}}</a>
+                                    {% elif forloop.counter|divisibleby:"10" %}
+                                        <a class="ui pink label" id="techlabel">{{tech}}</a>
+                                    {% elif forloop.counter|divisibleby:"9" %}
+                                        <a class="ui purple label" id="techlabel">{{tech}}</a>
+                                    {% elif forloop.counter|divisibleby:"8" %}
+                                        <a class="ui violet label" id="techlabel">{{tech}}</a>
+                                    {% elif forloop.counter|divisibleby:"7" %}
+                                        <a class="ui blue label" id="techlabel">{{tech}}</a>
+                                    {% elif forloop.counter|divisibleby:"6" %}
+                                        <a class="ui teal label" id="techlabel">{{tech}}</a>
+                                    {% elif forloop.counter|divisibleby:"5" %}
+                                        <a class="ui green label" id="techlabel">{{tech}}</a>
+                                    {% elif forloop.counter|divisibleby:"4" %}
+                                        <a class="ui olive label" id="techlabel">{{tech}}</a>
+                                    {% elif forloop.counter|divisibleby:"3" %}
+                                        <a class="ui yellow label" id="techlabel">{{tech}}</a>
+                                    {% elif forloop.counter|divisibleby:"2" %}
+                                        <a class="ui orange label" id="techlabel">{{tech}}</a> 
+                                    {% else %}
+                                        <a class="ui red label" id="techlabel">{{tech}}</a>
+                                    {% endif %}
+                                {% endfor %}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% elif not_found %}
+            <h2 class="ui header">
+                <i class="frown outline icon"></i>
+                <div class="content" id="bad-result">
+                    Sorry! Your search is not found
+                </div>
+            </h2>
+        {% elif  check_length %}
+            <h2 class="ui header">
+                <i class="keyboard icon"></i>
+                <div class="content" id="bad-result">
+                    Your search length should be greater than 0. 
+                </div>
+            </h2>
+        {% else %}
+            <h2 class="ui header">
+                <i class="search icon"></i>
+                <div class="content">
+                    Manage your search
+                    <div class="sub header">Select preferences and search</div>
+                </div>
+            </h2>
+        {% endif %}
+    </div>
+</div>
+
+<div class="ui container" id="searching-margin">.</div>
+
+{% comment %} {% include "f_home/footer.html" %}  {% endcomment %}
+
+{% endblock %}

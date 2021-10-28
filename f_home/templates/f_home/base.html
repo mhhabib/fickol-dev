@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>
+        {% block title %} {% endblock %}
+        </title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" href="{% static 'images/web.png' %}" type="image/png" sizes="16x16">
+        <link rel="stylesheet" href="{% static 'css/main.css' %}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" integrity="sha512-8bHTC73gkZ7rZ7vpqUQThUDhqcNFyYi2xgDgPDHc+GXVGHXq+xPjynxIopALmOPqzo9JZj0k6OqqewdGO3EsrQ==" crossorigin="anonymous" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Anton&family=Ubuntu&display=swap" rel="stylesheet">
+    </head>
+    <body>
+
+        {% if request.user.is_authenticated %}
+        <div class="ui right aligned grid" id="user-info">
+            <div class="sixteen wide column">
+                <p> Hello, {{request.user|title }}! 
+                <span> <a href="{% url 'contribution' %}"  class="item">My Contribution</a></span>
+                <span> <a href="{% url 'logout' %}" class="item"><i class="sign out alternate icon"></i>Logout</a></span>
+                </p>
+            </div>
+        </div>
+        {% endif %}
+        <div class="ui secondary menu" id="custom-container">
+            <a class="item" href="{% url 'posts' %}">
+                <img src="{% static 'images/web.png' %}">
+            </a>
+            <div class="right menu">
+                <a href="{% url 'posts' %}" class="item">Home</a>
+                <a href="{% url 'post-create' %}"  class="item">Contribute</a>
+                <a href="{% url 'search' %}"  class="item">
+                    Search <i class="search icon" style="padding-left: 8px;"></i>
+                </a>
+            </div>
+        </div>
+
+        {% block content %}
+
+        {% endblock %}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js" integrity="sha512-dqw6X88iGgZlTsONxZK9ePmJEFrmHwpuMrsUChjAw1mRUhUITE5QU9pkcSox+ynfLhL15Sv2al5A0LVyDCmtUw==" crossorigin="anonymous"></script>
+    </body>
+</html>

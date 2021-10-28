@@ -1,0 +1,22 @@
+{% extends 'f_home/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %} Add new language/technology {% endblock %}
+{% block content %}
+
+<div class="ui doubling stackable grid container">
+  <div class="column company-add-layout">
+      <div class="ui horizontal divider op-head">
+          <h3>Add language/technology</h3>
+      </div> 
+      <form class="ui form validation" method="POST">
+          {% csrf_token %}
+          {{form.media}}
+          <div class="field">
+              {{ form.title|as_crispy_field }}
+          </div>
+          <button class="fluid ui inverted green button">Submit</button>
+      </form>
+    </div>
+  </div>
+{% endblock content %}

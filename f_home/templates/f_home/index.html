@@ -1,0 +1,77 @@
+{% extends "f_home/base.html" %}
+{% load static %}
+{% block title %}Fickol {% endblock %}
+{% block content %}
+
+
+<div class="ui container mainsection-home">
+    <h3>It and Ites Company In <span>Bangladesh</span>
+</div>
+<div class="ui divider container"></div>
+<div class="ui center aligned container">
+  {% if posts %}
+  <div class="ui eight doubling cards">
+    {% for post in posts %}
+      <div class="orange card">
+        <div class="image">
+          <img src="{{ post.logo.url }}">
+        </div>
+        <div class="content">
+          <div class="header"><a href="{{ post.websitelink }}">{{ post.name }}</a></div>
+        </div>
+        
+          <div class="ui bottom attached button">
+          <a href="{% url 'details' post.id %}" target="_blank">
+            <i class="globe icon"></i>
+              <p>View Details</p>
+            </a>
+          </div>
+      </div>
+      {% endfor %}
+  </div>
+  {% else %}
+    <div class="ui placeholder segment">
+      <div class="ui icon header">
+        <i class="frown outline icon"></i>
+        No company information created yet.
+      </div>
+      <a href="{% url 'post-create' %}"><div class="ui inverted violet button"><i class="add icon"></i>Create First</div></a>
+    </div>
+  {% endif %}
+</div>
+
+<div class="ui center aligned container" id="pagination">
+    {% if is_paginated %}
+      {% if page_obj.has_previous %}
+        <a class="ui brown basic button" href="?page=1"><i class="angle double left icon"></i></a>
+        <a class="ui brown basic button" href="?page={{ page_obj.previous_page_number }}"><i class="angle left icon"></i></a>
+      {% endif %}
+
+      {% for num in page_obj.paginator.page_range %}
+        {% if page_obj.number == num %}
+          <a class="ui teal button" href="?page={{ num }}">{{ num }}</a>
+        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+          <a class="ui brown basic button" href="?page={{ num }}">{{ num }}</a>
+        {% endif %}
+      {% endfor %}
+
+      {% if page_obj.has_next %}
+        <a class="ui brown basic button" href="?page={{ page_obj.next_page_number }}"><i class="angle right icon"></i></a>
+        <a class="ui brown basic button" href="?page={{ page_obj.paginator.num_pages }}"><i class="angle double right icon"></i></a>
+      {% endif %}
+
+    {% endif %}
+</div>
+
+{% if posts|length > 8 %}
+  {% include "f_home/footer.html" %}
+{% endif %}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous"></script>
+<script type="text/javascript">
+    function pop(){
+      $('.ui.modal').modal('show');
+    }
+</script>
+
+{% endblock %}

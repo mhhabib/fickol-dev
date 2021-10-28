@@ -1,0 +1,1 @@
+web: gunicorn fickol.wsgi --log-file -

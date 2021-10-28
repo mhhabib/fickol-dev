@@ -1,0 +1,18 @@
+{% extends 'f_home/base.html' %}
+{% block content %}
+
+<div class="ui two column centered grid">
+  <div class="column registration-page">
+    <div class="ui horizontal divider del-head">
+        <h3>Delete Contribution</h3>
+    </div> 
+    <form method="POST">
+        {% csrf_token %}
+        <p style="text-align: center;">Are you sure to delete this contribution?</p>
+        <button class="fluid ui inverted red button">Delete</button>
+         
+    </form>
+    <p class="direction-section"><a href="{% url 'contribution' %}">&#8592; Go Back</a></p>
+  </div>
+</div>
+{% endblock content %}
